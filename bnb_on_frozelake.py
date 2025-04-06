@@ -68,7 +68,7 @@ def test_runs(env, runs=5, max_time=600):
         path, elapsed_time = branch_and_bound(env, max_time)
         if path:
             print(f"[BnB] Run {i+1}: Reached goal in {elapsed_time:.2f}s | Steps: {len(path)}")
-            save_gif_from_path("FrozenLake-v1", path, f"ida_run{i+1}.gif", is_slippery=False)
+            save_gif_from_path("FrozenLake-v1", path, f"bnb_run{i+1}.gif", is_slippery=False)
         else:
             print(f"[BnB] Run {i+1}: Goal not reached in {elapsed_time:.2f}s")
         times.append(elapsed_time)

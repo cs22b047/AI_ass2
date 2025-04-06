@@ -11,4 +11,5 @@ execution gif:
 
 Hueristic function used: Manhatten Distance
 execution gif:
+
 ![ida_run1](ida_run1.gif)

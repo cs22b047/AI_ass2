@@ -4,6 +4,32 @@ import time
 import matplotlib.pyplot as plt
 import imageio
 
+def save_gif_from_path(env_id, path, gif_name, is_slippery=False):
+    env = gym.make(env_id, is_slippery=is_slippery, render_mode="rgb_array")
+    frames = []
+
+    obs, _ = env.reset()
+    frames.append(env.render())
+
+    for i in range(1, len(path)):
+        curr_state = path[i - 1]
+        next_state = path[i]
+
+        # Find action that gets from curr_state to next_state
+        for action in range(env.action_space.n):
+            for prob, s, _, _ in env.unwrapped.P[curr_state][action]:
+                if s == next_state and prob > 0:
+                    obs, _, terminated, truncated, _ = env.step(action)
+                    frames.append(env.render())
+                    break
+            else:
+                continue
+            break
+
+    env.close()
+
+    imageio.mimsave(gif_name, frames, duration=0.5)
+    print(f"Saved GIF: {gif_name}")
 # Heuristic: Manhattan distance on FrozenLake grid
 def manhattan_distance(state, goal, grid_size):
     x1, y1 = divmod(state, grid_size)
@@ -65,6 +91,7 @@ def test_ida_runs(env, runs=5, max_time=600):
         path, elapsed_time = ida_star(env, max_time)
         if path:
             print(f"Run {i+1}: Reached goal in {elapsed_time:.2f}s | Steps: {len(path)}")
+            save_gif_from_path("FrozenLake-v1", path, f"ida_run{i+1}.gif", is_slippery=False)
         else:
             print(f"Run {i+1}: Goal not reached in {elapsed_time:.2f}s")
         times.append(elapsed_time)

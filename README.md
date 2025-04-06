@@ -13,3 +13,10 @@ Hueristic function used: Manhatten Distance
 execution gif:
 
 ![ida_run1](ida_run1.gif)
+
+## Dependencies
+### Frozen Lake
+```
+pip install gymnasium[all] matplotlib numpy imageio
+```
+

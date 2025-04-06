@@ -2,6 +2,7 @@ import gymnasium as gym
 import numpy as np
 import time
 import matplotlib.pyplot as plt
+import imageio
 
 # Heuristic: Manhattan distance on FrozenLake grid
 def manhattan_distance(state, goal, grid_size):
